@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hey, Miss Beautiful ✨</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="fav-icon.png" />
+  </head>
+  <body>
+    <div class="background-container"></div>
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <nav class="nav">
+      <div class="nav-container">
+        <div class="nav-logo">Hey, Miss Beautiful</div>
+      </div>
+    </nav>
+
+    <div class="main-container">
+      <section class="hero-section">
+        <h1 class="hero-title">You're Extraordinary</h1>
+        <p class="hero-subtitle">And I wanted you to know...</p>
+        <p class="hero-description">
+          There's something truly special about you that lights up every room
+          you enter. Your smile, your laugh, the way you see the world - it's
+          all incredibly beautiful, and I find myself drawn to your amazing
+          spirit.
+        </p>
+      </section>
+
+      <section class="cards-section">
+        <div class="premium-card">
+          <div class="card-icon">✨</div>
+          <h3 class="card-title">Your Light</h3>
+          <p class="card-text">
+            Every moment with you feels like magic. Your presence brings warmth
+            and joy that makes everything around you more beautiful and
+            meaningful.
+          </p>
+        </div>
+
+        <div class="premium-card">
+          <div class="card-icon">💫</div>
+          <h3 class="card-title">Your Spirit</h3>
+          <p class="card-text">
+            There's an incredible energy about you that's both inspiring and
+            captivating. You have this amazing way of making people feel special
+            and understood.
+          </p>
+        </div>
+
+        <div class="premium-card">
+          <div class="card-icon">🌸</div>
+          <h3 class="card-title">Your Beauty</h3>
+          <p class="card-text">
+            It's not just how you look (though you're absolutely stunning), but
+            the beauty of your heart, your kindness, and the genuine care you
+            show for others.
+          </p>
+        </div>
+      </section>
+
+      <section class="decision-section">
+        <h2 class="decision-title">I'd love to get to know you better</h2>
+
+        <div class="instagram-section">
+          <h3 class="instagram-title">
+            <i class="fab fa-instagram"></i> Let's Connect
+          </h3>
+          <p class="instagram-text">
+            If you'd like to explore where this could lead, I'd be honored if
+            you'd message me
+          </p>
+          <span id="instagramHandle" class="instagram-handle hidden">
+            ####
+          </span>
+        </div>
+
+        <div class="buttons-container">
+          <button class="premium-button" onclick="handleYesResponse()">
+            <i class="fas fa-heart"></i>
+            I'd love to talk! 💕
+          </button>
+
+          <button
+            class="premium-button secondary-button"
+            onclick="handleMaybeResponse()"
+          >
+            <i class="fas fa-clock"></i>
+            Maybe another time 🤔
+          </button>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p class="footer-text">
+          Made with genuine feelings and endless hope 💖
+        </p>
+        <p class="footer-text">
+          &copy; All Rights Reserved &lt;Shahmiraj_Ehesan /&gt;
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
