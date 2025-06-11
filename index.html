@@ -15,6 +15,47 @@
     <div class="background-container"></div>
     <div class="floating-elements" id="floatingElements"></div>
 
+
+    <!-- Audio Player -->
+    <div class="audio-player-container">
+      <div class="audio-player-button" id="audioPlayerButton">
+        <i class="fas fa-music" id="audioIcon"></i>
+      </div>
+      <div class="audio-controls">
+        <div class="audio-title">🎵 Special Song for You</div>
+        <div class="volume-control">
+          <i class="fas fa-volume-down volume-icon"></i>
+          <input
+            type="range"
+            class="volume-slider"
+            id="volumeSlider"
+            min="0"
+            max="100"
+            value="60"
+          />
+          <span class="volume-percentage" id="volumePercentage">60%</span>
+        </div>
+        <div class="playback-controls">
+          <button class="control-button" id="playPauseBtn">
+            <i class="fas fa-pause"></i>
+          </button>
+          <button
+            class="control-button active"
+            id="loopBtn"
+            title="Loop enabled"
+          >
+            <i class="fas fa-repeat"></i>
+          </button>
+        </div>
+      </div>
+      <audio id="backgroundAudio" loop>
+        <source src="Baby.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+
+
     <nav class="nav">
       <div class="nav-container">
         <div class="nav-logo">Hey, Miss Beautiful</div>

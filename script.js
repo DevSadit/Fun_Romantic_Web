@@ -129,3 +129,112 @@ document.addEventListener("mousemove", (e) => {
     }, 1500);
   }
 });
+
+//////////////////////////////////////////////////////////////////////////////////
+
+//--------------Audio Player Script-------------------
+
+//////////////////////////////////////////////////////////////////////////////////
+
+let audio = document.getElementById("backgroundAudio");
+let audioButton = document.getElementById("audioPlayerButton");
+let audioIcon = document.getElementById("audioIcon");
+let volumeSlider = document.getElementById("volumeSlider");
+let volumePercentage = document.getElementById("volumePercentage");
+let playPauseBtn = document.getElementById("playPauseBtn");
+let loopBtn = document.getElementById("loopBtn");
+let isPlaying = false;
+
+// Set initial volume
+audio.volume = 0.4;
+volumeSlider.value = 40;
+volumePercentage.textContent = "40%";
+
+// Try autoplay on load
+window.addEventListener("DOMContentLoaded", () => {
+  tryToPlay();
+
+  // If autoplay fails, wait for first user interaction
+  document.addEventListener("click", tryToPlayOnce);
+  document.addEventListener("keydown", tryToPlayOnce);
+});
+
+function tryToPlay() {
+  audio
+    .play()
+    .then(() => {
+      isPlaying = true;
+      audioIcon.className = "fas fa-pause";
+      audioButton.classList.add("playing");
+      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      console.log("Audio autoplayed successfully.");
+    })
+    .catch((error) => {
+      console.warn("Autoplay failed. Waiting for user interaction.");
+    });
+}
+
+function tryToPlayOnce() {
+  if (!isPlaying) tryToPlay();
+  document.removeEventListener("click", tryToPlayOnce);
+  document.removeEventListener("keydown", tryToPlayOnce);
+}
+
+// Toggle play/pause with button
+audioButton.addEventListener("click", () => {
+  if (isPlaying) {
+    audio.pause();
+    isPlaying = false;
+    audioIcon.className = "fas fa-play";
+    audioButton.classList.remove("playing");
+    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+  } else {
+    audio.play().then(() => {
+      isPlaying = true;
+      audioIcon.className = "fas fa-pause";
+      audioButton.classList.add("playing");
+      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    });
+  }
+});
+
+// Play/pause with control button
+playPauseBtn.addEventListener("click", () => {
+  if (isPlaying) {
+    audio.pause();
+    isPlaying = false;
+    audioIcon.className = "fas fa-play";
+    audioButton.classList.remove("playing");
+    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+  } else {
+    audio.play().then(() => {
+      isPlaying = true;
+      audioIcon.className = "fas fa-pause";
+      audioButton.classList.add("playing");
+      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    });
+  }
+});
+
+// Volume slider
+volumeSlider.addEventListener("input", (e) => {
+  let volume = e.target.value / 100;
+  audio.volume = volume;
+  volumePercentage.textContent = `${e.target.value}%`;
+
+  let volumeIcon = document.querySelector(".volume-icon");
+  if (volume === 0) {
+    volumeIcon.className = "fas fa-volume-mute volume-icon";
+  } else if (volume < 0.5) {
+    volumeIcon.className = "fas fa-volume-down volume-icon";
+  } else {
+    volumeIcon.className = "fas fa-volume-up volume-icon";
+  }
+});
+
+// Loop toggle
+loopBtn.addEventListener("click", () => {
+  audio.loop = !audio.loop;
+  loopBtn.classList.toggle("active");
+  loopBtn.title = audio.loop ? "Loop enabled" : "Loop disabled";
+});
