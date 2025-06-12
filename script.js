@@ -150,13 +150,17 @@ audio.volume = 0.4;
 volumeSlider.value = 40;
 volumePercentage.textContent = "40%";
 
-// Try autoplay on load
-window.addEventListener("DOMContentLoaded", () => {
-  tryToPlay();
+// Only allow play when premium-button is clicked
+document.addEventListener("DOMContentLoaded", () => {
+  const premiumBtn = document.querySelector(".premium-button");
 
-  // If autoplay fails, wait for first user interaction
-  document.addEventListener("click", tryToPlayOnce);
-  document.addEventListener("keydown", tryToPlayOnce);
+  if (premiumBtn) {
+    premiumBtn.addEventListener("click", () => {
+      if (!isPlaying) {
+        tryToPlay();
+      }
+    });
+  }
 });
 
 function tryToPlay() {
@@ -164,59 +168,55 @@ function tryToPlay() {
     .play()
     .then(() => {
       isPlaying = true;
-      audioIcon.className = "fas fa-pause";
-      audioButton.classList.add("playing");
-      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-      console.log("Audio autoplayed successfully.");
+      updateUIOnPlay();
+      console.log("Audio started from premium-button click.");
     })
     .catch((error) => {
-      console.warn("Autoplay failed. Waiting for user interaction.");
+      console.warn("Failed to play audio:", error);
     });
 }
 
-function tryToPlayOnce() {
-  if (!isPlaying) tryToPlay();
-  document.removeEventListener("click", tryToPlayOnce);
-  document.removeEventListener("keydown", tryToPlayOnce);
+function updateUIOnPlay() {
+  audioIcon.className = "fas fa-pause";
+  audioButton.classList.add("playing");
+  playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
 }
 
-// Toggle play/pause with button
+function updateUIOnPause() {
+  audioIcon.className = "fas fa-play";
+  audioButton.classList.remove("playing");
+  playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+}
+
+// Audio control via floating button
 audioButton.addEventListener("click", () => {
   if (isPlaying) {
     audio.pause();
     isPlaying = false;
-    audioIcon.className = "fas fa-play";
-    audioButton.classList.remove("playing");
-    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    updateUIOnPause();
   } else {
     audio.play().then(() => {
       isPlaying = true;
-      audioIcon.className = "fas fa-pause";
-      audioButton.classList.add("playing");
-      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      updateUIOnPlay();
     });
   }
 });
 
-// Play/pause with control button
+// Play/pause via control button
 playPauseBtn.addEventListener("click", () => {
   if (isPlaying) {
     audio.pause();
     isPlaying = false;
-    audioIcon.className = "fas fa-play";
-    audioButton.classList.remove("playing");
-    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    updateUIOnPause();
   } else {
     audio.play().then(() => {
       isPlaying = true;
-      audioIcon.className = "fas fa-pause";
-      audioButton.classList.add("playing");
-      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      updateUIOnPlay();
     });
   }
 });
 
-// Volume slider
+// Volume control
 volumeSlider.addEventListener("input", (e) => {
   let volume = e.target.value / 100;
   audio.volume = volume;
