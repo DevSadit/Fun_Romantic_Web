@@ -1,4 +1,6 @@
 let usernameRevealed = false;
+let continuousCelebration = false;
+let celebrationInterval;
 
 // Create floating particles
 function createFloatingParticle() {
@@ -19,6 +21,66 @@ function createFloatingParticle() {
   }, 10000);
 }
 
+// Create continuous celebration particles
+function createContinuousCelebrationParticle() {
+  const celebrationIcons = [
+    "💖",
+    "🌸",
+    "🌺",
+    "🌹",
+    "✨",
+    "💫",
+    "🌟",
+    "💕",
+    "💗",
+    "🦋",
+    "🌷",
+    "🌻",
+    "🎈",
+    "🎀",
+    "💋",
+    "🍁",
+    "🌿",
+    "🍂",
+    "💌",
+  ];
+  const particle = document.createElement("div");
+  particle.innerHTML =
+    celebrationIcons[Math.floor(Math.random() * celebrationIcons.length)];
+  particle.style.position = "fixed";
+  particle.style.left = Math.random() * window.innerWidth + "px";
+  particle.style.top = window.innerHeight + "px";
+  particle.style.fontSize = Math.random() * 15 + 20 + "px";
+  particle.style.zIndex = "1001";
+  particle.style.pointerEvents = "none";
+  particle.style.opacity = "0.8";
+
+  // Random horizontal movement
+  const randomX = (Math.random() - 0.5) * 200;
+  const animationDuration = Math.random() * 3 + 4; // 4-7 seconds
+
+  particle.style.animation = `floatUpAndFade ${animationDuration}s ease-out forwards`;
+  particle.style.setProperty("--random-x", randomX + "px");
+
+  document.body.appendChild(particle);
+
+  setTimeout(() => {
+    if (particle.parentNode) {
+      particle.remove();
+    }
+  }, animationDuration * 1000);
+}
+
+// Start continuous celebration
+function startContinuousCelebration() {
+  if (continuousCelebration) return; // Already running
+
+  continuousCelebration = true;
+
+  // Create particles at intervals
+  celebrationInterval = setInterval(createContinuousCelebrationParticle, 300);
+}
+
 // Generate floating particles
 setInterval(createFloatingParticle, 2000);
 
@@ -36,6 +98,9 @@ function handleYesResponse() {
   button.innerHTML =
     '<i class="fas fa-heart-eyes"></i> Amazing! Check Instagram! ✨';
   button.style.background = "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)";
+
+  // Start continuous celebration
+  startContinuousCelebration();
 
   // Reveal the Instagram username
   if (!usernameRevealed) {
@@ -238,3 +303,22 @@ loopBtn.addEventListener("click", () => {
   loopBtn.classList.toggle("active");
   loopBtn.title = audio.loop ? "Loop enabled" : "Loop disabled";
 });
+
+// Add CSS animation for continuous celebration particles
+const style = document.createElement("style");
+style.textContent = `
+  @keyframes floatUpAndFade {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100vh) translateX(var(--random-x)) rotate(360deg);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);

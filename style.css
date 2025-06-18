@@ -5,6 +5,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+html {
+    scroll-behavior: smooth;
+}
 
 :root {
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
